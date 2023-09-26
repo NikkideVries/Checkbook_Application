@@ -42,8 +42,10 @@ def add_debit():
                 save_checkbook()
             else:
                 print("Insufficient balance.")
+        # the number cannot be less that zero
         else:
             print("Invalid amount. Please enter a positive value.")
+    # the input cannot be a string or other ivalid inputc
     else:
         print("Invalid input. Please enter a valid number.")
         
