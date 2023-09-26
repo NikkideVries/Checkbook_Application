@@ -27,29 +27,47 @@ def current_balance():
 # add_debit (withdrawal) function:
 def add_debit():
     global balance
-    amount = float(input("How much money would you like to withdrawal: $"))
-    if amount > 0:
-        if amount <= balance:
-            balance -= amount
-            print(f"Withdrawing: ${amount:.2f}")
-            save_checkbook()
+    amount_str = input("How much money would you like to withdrawal: $")
+    
+    # Check if the input is a valid number
+    if amount_str.replace('.', '', 1).isdigit():
+        amount = float(amount_str)
+        
+        # Check if the amount is positive
+        if amount > 0:
+            # Check if there is sufficient balance
+            if amount <= balance:
+                balance -= amount
+                print(f"Withdrawing: ${amount:.2f}")
+                save_checkbook()
+            else:
+                print("Insufficient balance.")
         else:
-            print("Insufficient balance. You dont have enough funds to withdrawal")
+            print("Invalid amount. Please enter a positive value.")
     else:
-        print("Invalid amount. Please enter a positive amount.")
+        print("Invalid input. Please enter a valid number.")
         
         
 
 # add_credit (deposit) function:
 def add_credit():
     global balance
-    amount = float(input("How much money would you like to deposit: "))
-    if amount > 0:
-        balance += amount
-        print(f"Depositing: ${amount:.2f}")
-        save_checkbook()
+    amount_str = input("How much money would you like to deposit: ")
+    
+    # Check if the input is a valid number
+    if amount_str.replace('.', '', 1).isdigit():
+        amount = float(amount_str)
+        
+        # Check if the amount is positive
+        if amount > 0:
+            balance += amount
+            print(f"Depositing: ${amount:.2f}")
+            # this will update the checkbook balance and input the new value
+            save_checkbook()
+        else:
+            print("Invalid amount. Please enter a positive value.")
     else:
-        print("Invalid amount. Please enter a positive amount.")
+        print("Invalid input. Please enter a valid number.")
         
 
 load_checkbook()
