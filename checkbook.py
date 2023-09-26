@@ -1,65 +1,78 @@
-import os 
+#code without any comment: look at comments.ipynb to understand code
+import os
 import subprocess
 
-
-# Functions:
-# view current balance
+checkbook = 'balance.txt'
 
 balance = 0
-def current_balance(balance):
-    print(f"Your current balance is: ${balance}")
 
+# Check and read file
+def load_checkbook():
+    global balance
+    if os.path.exists(checkbook):
+        with open(checkbook, "r") as file:
+            balance = float(file.readline())
+
+# function to save the balance to 'balance.txt'
+def save_checkbook():
+    with open(checkbook, "w") as file:
+        file.write(str(balance))
+        
+# function for current balance
+def current_balance():
+    print(f"Current Balance: ${balance}")
     
     
-# add_debit: withdrawal
-def add_debit(balance):
-    balance -= debit_amount
-    print(f"Your current balance is:$ {balance}")
-    with open('balance.txt', 'w') as f:
-        f.write(f"{debit_amount}")
-    return balance
+    
+# add_debit (withdrawal) function:
+def add_debit():
+    global balance
+    amount = float(input("How much money would you like to withdrawal: $"))
+    if amount > 0:
+        if amount <= balance:
+            balance -= amount
+            print(f"Withdrawing: ${amount:.2f}")
+            save_checkbook()
+        else:
+            print("Insufficient balance. You dont have enough funds to withdrawal")
+    else:
+        print("Invalid amount. Please enter a positive amount.")
+        
+        
 
+# add_credit (deposit) function:
+def add_credit():
+    global balance
+    amount = float(input("How much money would you like to deposit: "))
+    if amount > 0:
+        balance += amount
+        print(f"Depositing: ${amount:.2f}")
+        save_checkbook()
+    else:
+        print("Invalid amount. Please enter a positive amount.")
+        
 
-
-# add_credit: deposit
-def add_credit(balance):
-    balance += credit_amount
-    print(f"Your current balance is:$ {balance}")
-    with open('balance.txt', 'w') as f:
-        f.write(f"{debit_amount}")
-    return balance
-
-# user input funciton
-
+load_checkbook()
+print(' ~~~ Welcome to your terminal checkbook! ~~~')
 
 while True:
-    print('\n~~~ Welcome to your terminal checkbook! ~~~')
-    print()
-    print("What would you like to do?\n")
-    print(" 1. View Current Balance") 
-    print(" 2. Add a Debit (withdrawal)")
-    print(" 3. Add a Credit (deposit)")
-    print(" 4. Exit the Application\n")
+    print("\nMenu:")
+    print("1. View current balance")
+    print("2. Add a debit (withdrawal)")
+    print("3. Add a credit (deposit)")
+    print("4. Exit")
 
-    choice = input("Please select a choice:")
+    choice = input("Please make a choice: ")
 
     if choice == "1":
-        current_balance(balance)
-
+        current_balance()
     elif choice == "2":
-        debit_amount = float(input("Enter the amount you would like to withdrawl: $"))
-        balance = add_debit(balance)
-
+        add_debit()
     elif choice == "3":
-        credit_amount = float(input("Enter the amount you would like to deposit: $"))
-        balance = add_credit(balance)
-
+        add_credit()
     elif choice == "4":
+        print("Exiting Aplication. Goodbye!")
+        print(f"Your balance is:  ${balance:.2f}")
         break
     else:
-        print("Invalid Input")
-
-
-print("Exiting the Application. Goodbye!")
-
-
+        print("Invalid choice. Please select a valid option (1-4).")
