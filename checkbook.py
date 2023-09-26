@@ -68,7 +68,14 @@ def add_credit():
             print("Invalid amount. Please enter a positive value.")
     else:
         print("Invalid input. Please enter a valid number.")
-        
+
+# exit function: 
+def exit_program():
+    global balance
+    save_checkbook()
+    print("\nExiting Aplication. Goodbye!")
+    print(f"Your balance is:  ${balance:.2f}\n")
+    exit()        
 
 load_checkbook()
 print(' ~~~ Welcome to your terminal checkbook! ~~~')
@@ -89,8 +96,7 @@ while True:
     elif choice == "3":
         add_credit()
     elif choice == "4":
-        print("Exiting Aplication. Goodbye!")
-        print(f"Your balance is:  ${balance:.2f}")
-        break
+        exit_program()
+        #break
     else:
         print("Invalid choice. Please select a valid option (1-4).")
