@@ -1,4 +1,4 @@
-#code without any comment: look at comments.ipynb to understand code
+#code without any comment: look at comments.ipynb to understand code. Grade this code.
 import os
 import subprocess
 
